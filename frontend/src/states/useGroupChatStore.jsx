@@ -1,0 +1,137 @@
+import {create} from "zustand"
+import { Axios } from "../utils/axios.js"
+import toast from "react-hot-toast"
+import { Slice } from "lucide-react"
+
+export const useGroupChatStore = create((set, get) => ({
+    groupMessages: [],
+    groupMembers: [],
+    allGroups: [],
+    selectedGroup: null,
+    isGettingAllGroups: false,
+    isGroupMessageLoading: false,
+    groupMembersLoading: false,
+    isCreatingGroup: false,
+    joinGroupLoading: false,
+    isGroupMember: false,
+
+    
+    //to creat a group expects: {name, description, isPublic, groupMembers} api/groups/create
+    createGroup: async (data) => {
+        set({isCreatingGroup: true})
+        try {
+            const res = await Axios.post("api/groups/create", data)
+            if(res.status == 201){
+                toast.success("You have succesfully created a group.")
+                set({selectedGroup: res.data})
+            } else {
+                toast.error(res.data.message)
+            }
+            
+        } catch (e) {
+            console.log("Error in creating group", e)
+            toast.error(e.response.data.message)
+        } finally {
+            set({isCreatingGroup: false})
+        }
+    },
+
+    //to join a group expects: {groupId} posts to api/groups/join
+    joinGroup: async (data) => {
+        set({joinGroupLoading: true})
+        try {
+            const res = await Axios.post("api/groups/join", data)
+            if(res.status == 200){
+                set({selectedGroup: res.data.group})
+                toast.success(res.data.message)
+            } else {
+                toast.error("Cannot join group.")
+            } 
+            
+        } catch (e) {
+            console.log("Error in creating group", e)
+            toast.error(e.response.data.message)
+        } finally {
+            set({joinGroupLoading: false})
+        }
+    },
+
+    //to add user to a group expects: {groupId, userId} posts to api/groups/join/id
+    addUser: async () => {
+
+    },
+
+    //to leave a group expects: {groupId} posts to api/groups/leave/id
+    leaveGroup: async () => {
+        
+
+    },
+
+    //expects id in parameter get request to api/groups/getAllMembers/:id
+    getGroupMembers: async (id) => {
+        set({groupMembersLoading: true})
+        try {
+            const res = await Axios.get("/api/groups/getAllMembers/"+id)
+            set({groupMembers: res.data.members});
+            
+        } catch (e) {
+            console.log("Error in fetching group members", e)
+            toast.error(e.response.data.message)
+        } finally {
+            set({groupMembersLoading: false})
+        }
+        
+    },
+
+    //to update a group expects: {groupId, name, isPublic, description} posts to api/groups/update/id
+    updateGroupProfile: async () => {
+
+    },
+
+    //to delete a group expects: {groupId} posts to api/groups/delete/id
+    deleteGroup: async () => {
+
+    },
+
+    //get all groups
+    getAllGroups: async () => {
+        set({isGettingAllGroups: true})
+        try {
+            const res = await Axios.get("api/groups/getAllGroups")
+            set({allGroups: res.data})
+            
+        } catch (e) {
+            console.log("Error in fetching all groups", e)
+            toast.error(e.response.data.message)
+        } finally {
+            set({isGettingAllGroups: false})
+        }
+    }, 
+    setSelectedGroup:  (group) => {
+        set({selectedGroup: group})
+    },
+
+    //to get all messages with the group id
+    getGroupMessages: async (groupId) => {
+        set({isGroupMessageLoading: true})
+        try {
+            const res = await Axios.get(`api/groups/message/getMessage/${groupId}`)
+            if (res.status == 200) {
+                set({groupMessages: res.data})
+            } else {
+                toast.error(res.data.message)
+            }
+        } catch (e) {
+            console.log("Error in fetching all messages", e)
+            toast.error(e.response.data.message) 
+        } finally {
+            set({isGroupMessageLoading: false})
+        }
+    },
+
+    //to send message expects {groupId, content} post to api/groups/message/sendMessage
+    sendMessage: () => {
+
+    }
+
+}))
