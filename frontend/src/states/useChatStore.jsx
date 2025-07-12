@@ -39,7 +39,7 @@ export const useChatStore = create((set, get) => ({
     deleteMessage: (id) => {
         const newMessages = get().messages.filter(msg => msg._id != id)
         set({messages: newMessages})
-        /* call an end point in the backend to remove it from db*/
+        /* call an end point in the backend to remove it from database*/
     },
     sendMessage: async (data) =>{
         const { selectedUser } = get()

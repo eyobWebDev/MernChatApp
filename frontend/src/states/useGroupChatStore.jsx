@@ -14,6 +14,7 @@ export const useGroupChatStore = create((set, get) => ({
     isCreatingGroup: false,
     joinGroupLoading: false,
     isGroupMember: false,
+    isSendingMessage: false,
 
     
     //to creat a group expects: {name, description, isPublic, groupMembers} api/groups/create
@@ -68,10 +69,11 @@ export const useGroupChatStore = create((set, get) => ({
     },
 
     //expects id in parameter get request to api/groups/getAllMembers/:id
-    getGroupMembers: async (id) => {
+    getGroupMembers: async () => {
+        const {selectedGroup} = get()
         set({groupMembersLoading: true})
         try {
-            const res = await Axios.get("/api/groups/getAllMembers/"+id)
+            const res = await Axios.get("/api/groups/getAllMembers/"+selectedGroup._id)
             set({groupMembers: res.data.members});
             
         } catch (e) {
@@ -112,10 +114,11 @@ export const useGroupChatStore = create((set, get) => ({
     },
 
     //to get all messages with the group id
-    getGroupMessages: async (groupId) => {
+    getGroupMessages: async () => {
+        const {selectedGroup} = get()
         set({isGroupMessageLoading: true})
         try {
-            const res = await Axios.get(`api/groups/message/getMessage/${groupId}`)
+            const res = await Axios.get(`api/groups/message/getMessage/${selectedGroup._id}`)
             if (res.status == 200) {
                 set({groupMessages: res.data})
             } else {
@@ -129,9 +132,26 @@ export const useGroupChatStore = create((set, get) => ({
         }
     },
 
-    //to send message expects {groupId, content} post to api/groups/message/sendMessage
-    sendMessage: () => {
+    //to send message expects {content} post to api/groups/message/sendMessage
+    sendMessage: async (data) => {    
+        set({isSendingMessage: true})
+        const {selectedGroup, groupMessages} = get()
+        if (!selectedGroup) return
+        set({groupMessages: [...groupMessages, data]})
+        try {
+            const res = await Axios.post(`api/groups/message/sendMessage/${selectedGroup._id}`, data) 
+            
+        } catch (e) {
+            console.log("Error in sending message", e)
+            toast.error(e.response.data.message) 
+        } finally {
+            set({isSendingMessage: false})
+        }
+    },
+    subscribeToMessage: async () => {
+
+    },
+    unsubscribeFromMessage: async () => {
 
     }
-
 }))

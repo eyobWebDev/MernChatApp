@@ -4,9 +4,10 @@ import { useGroupChatStore } from "../states/useGroupChatStore"
 import MessageLayout from "./MessageLayout"
 import SendMessageLayout from "./SendMessageLayout"
 import { useEffect } from "react"
+import { Loader } from "lucide-react"
 
 export default function GroupMessageTab() {
-    const {groupMessages, groupMembers,selectedGroup, joinGroup} = useGroupChatStore()
+    const {groupMessages, groupMembers,selectedGroup, joinGroup, joinGroupLoading} = useGroupChatStore()
     const {authUser} = useAuthStore()
     const [isInGroup, setIsInGroup] =  useState(false)
  
@@ -29,7 +30,8 @@ export default function GroupMessageTab() {
             </div>
 
             <div>
-                  {isInGroup ? <SendMessageLayout /> : <button onClick={handleClick} className="btn w-full">JOIN</button>}
+                  {isInGroup ? <SendMessageLayout /> : 
+                  <button onClick={handleClick} disabled={joinGroupLoading} className="btn w-full">{joinGroupLoading ? <Loader />: "JOIN"}</button>}
             </div>
     </>
 }

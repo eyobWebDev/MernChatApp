@@ -1,7 +1,5 @@
  import { useGroupChatStore } from "../states/useGroupChatStore"
  import GroupTile from "../groupChatComponents/GroupTile"
- import MessageLayout from "../groupChatComponents/MessageLayout";
- import SendMessageLayout from "../groupChatComponents/SendMessageLayout"
  import { useEffect } from "react";
  import ChatRoomTab from "../groupChatComponents/ChatRoomTab";
 import { Routes, Route, NavLink, useNavigate, useParams } from "react-router-dom";
@@ -9,19 +7,17 @@ import { MoreVertical, ArrowLeftIcon, LogIn } from "lucide-react";
 import GroupMessageTab from "../groupChatComponents/GroupMessageTab";
 import GroupMemberTab from "../groupChatComponents/GroupMemberTab";
 import GroupMediaTab from "../groupChatComponents/GroupMediaTab";
-import { useAuthStore } from "../states/useAuthStore";
 import { useState } from "react";
 import ShowMoreBox from "../groupChatComponents/ShowMoreBox";
  
  export default function GroupChatRoom() {
-    const {selectedGroup, isGroupMessageLoading, getGroupMessages, setSelectedGroup, groupMembers, getGroupMembers, allGroups, getAllGroups} = useGroupChatStore()
+    const {selectedGroup, getGroupMessages, getGroupMembers} = useGroupChatStore()
     const [showBox, setShowBox] = useState(false)
-    const navigate = useNavigate()
  
 
  useEffect(() => {
-        getGroupMessages(selectedGroup._id)
-        getGroupMembers(selectedGroup._id)
+        getGroupMessages()
+        getGroupMembers()
     }, []);
 
 
