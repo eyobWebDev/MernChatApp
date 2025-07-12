@@ -1,9 +1,14 @@
 import GroupMessage from "../models/groupMessage.models.js"
 //to get all messages from a groups
-export const getAllGroupMessages = (req, res) => {
-    const {id} = req.params
+export const getAllGroupMessages = async (req, res) => {
+    const {id: groupId} = req.params
     try {
-        //query all message with this groupId
+        //query all message with this groupId and the sender ids object field also should be populated to display them in the frontend
+        const messages = await GroupMessage.find({ groupId })
+      .populate({
+        path: "senderId",
+        select: "fullName email profilePic", // Adjust fields as needed
+      })
     } catch (e) {
         console.log("Error in getAllGroupMessages controller", e.message)
         res.status(500).json({message: "Internal server error."})
@@ -12,7 +17,8 @@ export const getAllGroupMessages = (req, res) => {
 
 //to send message to  group
 export const sendGroupMessage = async (req, res) => {
-    const {groupId, content} = req.body
+    const {content} = req.body
+    const {id: groupId} = req.params
     try {
         const senderId = req.user._id
         const groupMessage = new GroupMessage({groupId, content, senderId})
