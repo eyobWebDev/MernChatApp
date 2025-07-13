@@ -119,11 +119,7 @@ export const useGroupChatStore = create((set, get) => ({
         set({isGroupMessageLoading: true})
         try {
             const res = await Axios.get(`api/groups/message/getMessage/${selectedGroup._id}`)
-            if (res.status == 200) {
-                set({groupMessages: res.data})
-            } else {
-                toast.error(res.data.message)
-            }
+                set({groupMessages: res.data.messages})
         } catch (e) {
             console.log("Error in fetching all messages", e)
             toast.error(e.response.data.message) 

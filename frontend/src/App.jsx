@@ -15,7 +15,6 @@ import {Loader } from "lucide-react"
 
 function App() {
   const {isCheckingAuth, authUser, checkAuth, isLoggingOut, logout, onlineUsers} = useAuthStore()
-    console.log("onlineUsers", onlineUsers)
     
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", "dark")

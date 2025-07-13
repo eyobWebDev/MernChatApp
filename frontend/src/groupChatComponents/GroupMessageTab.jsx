@@ -6,19 +6,15 @@ import SendMessageLayout from "./SendMessageLayout"
 import { useEffect } from "react"
 import { Loader } from "lucide-react"
 
-export default function GroupMessageTab() {
+export default function GroupMessageTab({isInGroup}) {
     const {groupMessages, groupMembers,selectedGroup, joinGroup, joinGroupLoading} = useGroupChatStore()
     const {authUser} = useAuthStore()
-    const [isInGroup, setIsInGroup] =  useState(false)
- 
-    useEffect(() => {
-        setIsInGroup(groupMembers.some(members => members._id == authUser._id))
-    })
 
     const handleClick = async () => {
         await joinGroup({groupId: selectedGroup._id})
-        setIsInGroup(true)
     }
+    console.log("group message", groupMessages);
+    
 
     return<>
     <div className="h-[60vh]">

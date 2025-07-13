@@ -27,11 +27,11 @@ export default function MessageLayout({message}) {
         </div> */}
 
             {/* to display text recieved from other users or my self*/}
-            <div className="flex gap-2.5">
+            <div className="flex gap-2.5 items-center">
                 <div>
                     {/* display the users profile in circle or the first two letters of their name or default picture */}
                     <div className="h-8 w-8 relative justify-center items-center rounded-full">
-                        <img className="absolute object-cover w-full h-full" src={message.senderId.profilePic || defaultPicture} />
+                        <img className="absolute object-cover w-full h-full rounded-full" src={message.senderId.profilePic || defaultPicture} />
                     </div>
                 </div>
  

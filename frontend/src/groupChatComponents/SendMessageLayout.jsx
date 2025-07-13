@@ -1,15 +1,17 @@
 import {Send , X, Image} from "lucide-react"
 import {useState } from "react"
 import toast from "react-hot-toast"
-import {useChatStore } from "../states/useChatStore.jsx"
-import {useAuthStore } from "../states/useAuthStore.jsx"
 import {useParams } from "react-router-dom"
+import {useGroupChatStore} from "../states/useGroupChatStore.jsx"
+import { useAuthStore } from "../states/useAuthStore.jsx"
 
 export default function MessageInput(){
     const [message, setMessage] = useState("")
     const [image, setImage] = useState("")
     const [imagePreviw, setImagePreview] = useState(false)
     const {id: recieverId} = useParams()
+    const {sendMessage, selectedGroup} = useGroupChatStore()
+    const {authUser} = useAuthStore()
     
     const handleCancelButton =  () => {
         setImagePreview(false)
@@ -35,6 +37,7 @@ export default function MessageInput(){
         setMessage("")
         setImagePreview(false)
         //a functionality to send message
+        await sendMessage({content: message, groupId: selectedGroup, senderId: authUser._id})
     }
     
     return<> 

@@ -9,15 +9,19 @@ import GroupMemberTab from "../groupChatComponents/GroupMemberTab";
 import GroupMediaTab from "../groupChatComponents/GroupMediaTab";
 import { useState } from "react";
 import ShowMoreBox from "../groupChatComponents/ShowMoreBox";
+import { useAuthStore } from "../states/useAuthStore";
  
  export default function GroupChatRoom() {
-    const {selectedGroup, getGroupMessages, getGroupMembers} = useGroupChatStore()
+    const {selectedGroup, getGroupMessages, getGroupMembers, groupMembers} = useGroupChatStore()
+    const {authUser} = useAuthStore()
     const [showBox, setShowBox] = useState(false)
+    const [isInGroup, setIsInGroup] =  useState(false)
  
 
  useEffect(() => {
         getGroupMessages()
         getGroupMembers()
+        setIsInGroup(groupMembers.some(members => members._id == authUser._id))
     }, []);
 
 
@@ -59,7 +63,7 @@ import ShowMoreBox from "../groupChatComponents/ShowMoreBox";
             <div>
                 <ChatRoomTab />
                 <Routes>
-                    <Route index element={<GroupMessageTab />}/>
+                    <Route index element={<GroupMessageTab isInGroup={isInGroup} />}/>
                     <Route path="members" element={<GroupMemberTab />}/>
                     <Route path="media" element={<GroupMediaTab />}/>
                 </Routes>
