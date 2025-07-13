@@ -4,11 +4,11 @@ export const getAllGroupMessages = async (req, res) => {
     const {id: groupId} = req.params
     try {
         //query all message with this groupId and the sender ids object field also should be populated to display them in the frontend
-        const messages = await GroupMessage.find({ groupId })
-      .populate({
+        const messages = await GroupMessage.find({ groupId }).populate({
         path: "senderId",
         select: "fullName email profilePic", // Adjust fields as needed
       })
+      res.status(200).json({messages})
     } catch (e) {
         console.log("Error in getAllGroupMessages controller", e.message)
         res.status(500).json({message: "Internal server error."})
@@ -17,17 +17,16 @@ export const getAllGroupMessages = async (req, res) => {
 
 //to send message to  group
 export const sendGroupMessage = async (req, res) => {
-    const {content} = req.body
-    const {id: groupId} = req.params
+    const {content, groupId, senderId} = req.body
+
     try {
-        const senderId = req.user._id
         const groupMessage = new GroupMessage({groupId, content, senderId})
         if(!groupMessage){
             return res.status(400).json({message: "Bad request: Could not create the message."})
         }
         res.status(201).json(groupMessage)
         await groupMessage.save()
-        //implement socket connection for real time
+        //TODO: implement socket connection for real time
         
     } catch (e) {
         console.log("Error in sendGroupMessage controller.", e.message)
