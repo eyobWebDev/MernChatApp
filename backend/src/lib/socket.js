@@ -1,6 +1,7 @@
 import { Server } from "socket.io"
 import http from "http"
 import express from "express"
+import { group } from "console"
 
 const app = express()
 const server = http.createServer(app)
@@ -20,6 +21,15 @@ io.on("connection", socket => {
     const userId = socket.handshake.query.userId
     if(userId) userSocketMap[userId] = socket.id
     io.emit("getOnlineUsers", Object.keys(userSocketMap))
+
+    socket.on("join-group", groupId => {
+        console.log("socket joined group in socket lib");
+        socket.join(groupId)
+    })
+
+    socket.on("leave-group", groupId => {
+        socket.leave(groupId)
+    })
     
     socket.on("disconnect", () => {
         console.log("User disconnected ", socket.id)

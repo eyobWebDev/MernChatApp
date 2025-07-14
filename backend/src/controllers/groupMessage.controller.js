@@ -1,4 +1,6 @@
 import GroupMessage from "../models/groupMessage.models.js"
+import { io } from "../lib/socket.js"
+
 //to get all messages from a groups
 export const getAllGroupMessages = async (req, res) => {
     const {id: groupId} = req.params
@@ -26,7 +28,12 @@ export const sendGroupMessage = async (req, res) => {
         }
         res.status(201).json(groupMessage)
         await groupMessage.save()
-        //TODO: implement socket connection for real time
+        const newMessage = await groupMessage.populate({path: "senderId", select: "fullName email profilePic"})
+
+        //socket connection for real time
+        console.log("sendig message to", groupMessage.groupId.toString());
+        
+        io.to(groupMessage.groupId.toString()).emit("new-group-message", newMessage)
         
     } catch (e) {
         console.log("Error in sendGroupMessage controller.", e.message)
@@ -35,7 +42,7 @@ export const sendGroupMessage = async (req, res) => {
 }
 
 
-//edit group message
+//edit group messages
 export const editGroupMessage = async (req, res) => {
     const {id: groupId} = req.params
     const {messageId, content} = req.body
@@ -45,8 +52,7 @@ export const editGroupMessage = async (req, res) => {
         const userCanEdit = senderId.toString() == groupMessage.senderId.toString()
         if(userCanEdit){
             const newGroupMessage = await GroupMessage.findByIdAndUpdate({_id: messageId},
-                {content}, {new: true}
-            )
+                {content}, {new: true})
             res.status(200).json({groupMessage: newGroupMessage, message: "Succesfully edited the message"})
             //implement real time connection
         } else {
