@@ -12,17 +12,18 @@ import ShowMoreBox from "../groupChatComponents/ShowMoreBox";
 import { useAuthStore } from "../states/useAuthStore";
  
  export default function GroupChatRoom() {
-    const {selectedGroup, getGroupMessages, getGroupMembers, groupMembers} = useGroupChatStore()
-    const {authUser} = useAuthStore()
+    const {selectedGroup, getGroupMessages, getGroupMembers, groupMembers, subscribeToMessage, unsubscribeFromMessage} = useGroupChatStore()
+    const {authUser, socket} = useAuthStore()
     const [showBox, setShowBox] = useState(false)
-    const [isInGroup, setIsInGroup] =  useState(false)
+    
  
 
  useEffect(() => {
         getGroupMessages()
         getGroupMembers()
-        setIsInGroup(groupMembers.some(members => members._id == authUser._id))
     }, []);
+  
+    
 
 
     if(!selectedGroup){
@@ -63,7 +64,7 @@ import { useAuthStore } from "../states/useAuthStore";
             <div>
                 <ChatRoomTab />
                 <Routes>
-                    <Route index element={<GroupMessageTab isInGroup={isInGroup} />}/>
+                    <Route index element={<GroupMessageTab />}/>
                     <Route path="members" element={<GroupMemberTab />}/>
                     <Route path="media" element={<GroupMediaTab />}/>
                 </Routes>

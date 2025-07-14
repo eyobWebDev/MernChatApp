@@ -14,9 +14,7 @@ export default function MessageLayout({message}) {
     if(!message) {
         return <div>No messages yet!</div>
     }
-    console.log('message', message);
     
-
     return <div>
         <div className={`chat ${message.senderId._id == authUser._id ? "chat-end " : "chat-start"}`}>
            
@@ -36,6 +34,7 @@ export default function MessageLayout({message}) {
                 </div>
  
                 {message.content && <div className={`chat-bubble ${message.senderId._id == authUser._id ? "bg-blue-500" : "bg-gray-700"}`}>
+                    <div style={{fontSize: 11}} className={`${message.senderId._id == authUser._id ? "text-gray-50" : "text-gray-400"}`}>{message.senderId.fullName?.split(" ")[0]}</div>
                 {message.content}
                 <div className="flex gap-2">{!isToday(message.createdAt) && <FormatDate rawDate={message.createdAt} />}<FormatTime rawDate={message.createdAt} /></div>
                 </div>}

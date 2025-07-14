@@ -1,7 +1,7 @@
 import {create} from "zustand"
 import { Axios } from "../utils/axios.js"
 import toast from "react-hot-toast"
-import { Slice } from "lucide-react"
+import { useAuthStore } from "./useAuthStore.jsx"
 
 export const useGroupChatStore = create((set, get) => ({
     groupMessages: [],
@@ -133,7 +133,7 @@ export const useGroupChatStore = create((set, get) => ({
         set({isSendingMessage: true})
         const {selectedGroup, groupMessages} = get()
         if (!selectedGroup) return
-        set({groupMessages: [...groupMessages, data]})
+    
         try {
             const res = await Axios.post(`api/groups/message/sendMessage/${selectedGroup._id}`, data) 
             
@@ -145,9 +145,23 @@ export const useGroupChatStore = create((set, get) => ({
         }
     },
     subscribeToMessage: async () => {
+        const {selectedGroup, groupMessages} = get()
+        if (!selectedGroup) return
+        const socket = useAuthStore.getState().socket
+        socket.emit("join-group", selectedGroup._id)
+        socket.on("new-group-message", newMessage => {
+            set((state) => ({
+                groupMessages: [...state.groupMessages, newMessage],
+            }));
+            console.log("newgroup message", newMessage);
+        })
 
     },
     unsubscribeFromMessage: async () => {
-
+        const {selectedGroup, groupMessages} = get()
+        if (!selectedGroup) return
+        const socket = useAuthStore.getState().socket
+        socket.emit("leave-group", selectedGroup._id)
+        socket.off("new-group-message")
     }
 }))
