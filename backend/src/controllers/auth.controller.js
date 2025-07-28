@@ -86,16 +86,19 @@ export const logout = (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { profilePic } = req.body
-        
-        console.log(req.file)
+       const userId = req.user._id
+       
+       if(process.env.NODE_ENV != "development") {
         const cloudinaryRes = await cloudinary.uploader.upload(profilePic)
-        console.log(cloudinaryRes.secure_url)
-        
-        const userId = req.user._id
-        const newUser = await User.findByIdAndUpdate(userId, {profilePic: cloudinaryRes.secure_url}, {new: true})
+        const newUser = await User.findByIdAndUpdate(userId, {profilePic : cloudinaryRes.secure_url}, {new: true})
+        res.status(200).json(newUser)
+        return
+       }  
+ 
+        const newUser = await User.findByIdAndUpdate(userId, {profilePic}, {new: true})
         res.status(200).json(newUser)
     } catch (e) {
-        console.log("Error in Upload profile controller", e.message)
+        console.log("Error in Upload profile controller", e)
         res.status(500).json({message: "Internal server error."})
     }
 }

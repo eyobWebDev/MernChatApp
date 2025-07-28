@@ -23,7 +23,6 @@ io.on("connection", socket => {
     io.emit("getOnlineUsers", Object.keys(userSocketMap))
 
     socket.on("join-group", groupId => {
-        console.log("socket joined group in socket lib");
         socket.join(groupId)
     })
 
