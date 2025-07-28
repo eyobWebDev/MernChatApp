@@ -4,21 +4,30 @@ import MessageInput from "../components/MessageInput.jsx"
 import ShowMessage from "../components/ShowMessage.jsx"
 import defaultPicture from "../assets/Avatar.jpg"
 import ShowUserInChat from "../components/ShowUserInChat.jsx"
+import { ArrowLeft } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 
 export default function ChatMessage(){
     const {selectedUser } = useChatStore()
     const {onlineUsers } = useAuthStore()
+    const navigate = useNavigate()
     
     if(!selectedUser){
-        return<div className="text-gray-400 flex-col flex justify-center items-center h-[80dvh]">
-        <div>No user selected!</div>
-        <div>Start chat with one of the users</div>
+        return<div className="p-2">
+            <div>
+                <ArrowLeft className="cursor-pointer" onClick={() => navigate('/users')} />
+            </div>
+            <div className="text-gray-400 flex-col flex justify-center items-center h-[80dvh]">
+                <div>No user selected!</div>
+                <div>Start chat with one of the users</div>
+            </div>
         </div>
+        
     }
 
     
-    return<div className="flex max-h-[80vh] flex-col justify-between">
+    return<div className="flex max-h-[100vh] flex-col justify-between">
     {/* chat message top part*/}
     
      <ShowUserInChat />

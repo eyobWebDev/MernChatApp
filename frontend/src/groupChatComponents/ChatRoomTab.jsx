@@ -6,24 +6,31 @@ import { useGroupChatStore } from "../states/useGroupChatStore"
 export default function ChatRoomTab() {
     const {selectedGroup} = useGroupChatStore()
 
-    return <div className="flex justify-around">
-        <NavLink to={"/groups/"+selectedGroup._id }
-       className={`p-1 flex gap-1.5 border-b chat ${({isActive}) => isActive ? "text-blue-400": ""}`}
+    return <div className="flex justify-between">
+        <NavLink to={"/groups/"+selectedGroup._id+"/messages" }
+       className={({isActive}) => isActive ? "text-blue-400": ""}
        >
+         <div className="p-1 flex gap-1.5">
             <MessageCircle />
             <div>Messages</div>
+         </div>
         </NavLink>
 
         <NavLink to={"/groups/"+selectedGroup._id+"/members"}
-        className="p-1 flex gap-1.5 border-b">
-            <PersonStanding />
-            <div>Members</div>
+        className={({isActive}) => isActive ? "text-blue-400 ": ""}>
+            <div className="p-1 flex gap-1.5">
+                <PersonStanding className="" />
+                <div className="">Members</div>
+            </div>
+            
         </NavLink>
 
         <NavLink to={"/groups/"+selectedGroup._id+"/media"}
-        className="p-1 flex gap-1.5 border-b">
-            <ImageIcon />
-            <div>Media</div>
+        className={({isActive}) => isActive ? "text-blue-400": ""}>
+            <div className="p-1 flex gap-1.5">
+                <ImageIcon />
+                <div>Media</div>
+            </div>
         </NavLink>
     </div>
 }

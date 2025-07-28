@@ -43,6 +43,7 @@ export default function ShowMessage(){
     if(messages.length <= 0){
         return <div>No messages yet! </div>
     }
+    
     const isToday = (value) => {
         const rawDate = new Date(value);
         const today = new Date();
@@ -60,7 +61,7 @@ export default function ShowMessage(){
     </div>}
     
        {/* to display text recieved from other user*/}
-      {message.text && <div className={`chat-bubble ${message.senderId == authUser._id ? "bg-blue-500" : "bg-gray-700"}`}>
+      {message.text && <div className={`chat-bubble text-gray-50 ${message.senderId == authUser._id ? "bg-blue-500" : "bg-gray-700"}`}>
         {message.text}
         <div className="flex gap-2">{!isToday(message.createdAt) && <FormatDate rawDate={message.createdAt} />}<FormatTime rawDate={message.createdAt} /></div>
       </div>

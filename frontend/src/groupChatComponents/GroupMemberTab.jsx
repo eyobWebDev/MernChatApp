@@ -8,7 +8,9 @@ export default function GroupMemberTab() {
     <div className="h-[70vh]">
         {
             groupMembers.map(member => {
-                return <ShowUser user={member} />
+                return <>
+                   <ShowUser user={member} />
+                </>
             })
         }
     </div>

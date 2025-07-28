@@ -23,7 +23,7 @@ export default function GroupChatList(){
     
 
     return<>
-    <div className="border-l m-2">
+    <div className="m-2">
        {allGroups.map(group => {
         return <GroupTile group={group} />
        })

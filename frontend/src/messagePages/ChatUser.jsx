@@ -7,7 +7,8 @@ export default function ChatUser(){
     const {isUserLoading, users, getUsers} = useChatStore()
     
     useEffect(() => {
-    if(users.length <= 0){
+
+        if(users.length <= 1){
       getUsers()
     }
     }, [])

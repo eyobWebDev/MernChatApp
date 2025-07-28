@@ -26,17 +26,22 @@ export default function MessageLayout({message}) {
 
             {/* to display text recieved from other users or my self*/}
             <div className="flex gap-2.5 items-center">
-                <div>
+                {message.senderId._id != authUser._id && <div className="flex flex-col gap-1 p-2">
                     {/* display the users profile in circle or the first two letters of their name or default picture */}
+                     <div style={{fontSize: 11}} className={`${message.senderId._id == authUser._id ? "text-gray-50" : "text-gray-400"}`}>
+                        {message.senderId.fullName?.split(" ")[0]}
+                    </div>
                     <div className="h-8 w-8 relative justify-center items-center rounded-full">
                         <img className="absolute object-cover w-full h-full rounded-full" src={message.senderId.profilePic || defaultPicture} />
                     </div>
-                </div>
+                   
+                </div>}
  
                 {message.content && <div className={`chat-bubble ${message.senderId._id == authUser._id ? "bg-blue-500" : "bg-gray-700"}`}>
-                    <div style={{fontSize: 11}} className={`${message.senderId._id == authUser._id ? "text-gray-50" : "text-gray-400"}`}>{message.senderId.fullName?.split(" ")[0]}</div>
-                {message.content}
-                <div className="flex gap-2">{!isToday(message.createdAt) && <FormatDate rawDate={message.createdAt} />}<FormatTime rawDate={message.createdAt} /></div>
+                    
+                    <div className={`text-gray-50 text-[13px] mb-1`}>{message.content}</div>
+                    <div className={`flex gap-1`}>{!isToday(message.createdAt) && <FormatDate fontSize={8} rawDate={message.createdAt} />}<FormatTime fontSize={8} rawDate={message.createdAt} />
+                    </div>
                 </div>}
                            
             </div>

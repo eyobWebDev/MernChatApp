@@ -1,5 +1,5 @@
 
-export function FormatTime({rawDate}){
+export function FormatTime({fontSize, rawDate}){
 
     const formattedTime = new Date(rawDate).toLocaleTimeString([], {
     hour: "numeric",
@@ -9,16 +9,16 @@ export function FormatTime({rawDate}){
     
     
 
-    return <div style={{fontSize: "9px"}} className=" text-gray-300">{formattedTime}</div>
+    return <div style={{fontSize: fontSize || "9px"}} className=" text-gray-300">{formattedTime}</div>
 }
 
-export function FormatDate({rawDate}){
+export function FormatDate({fontSize, rawDate}){
     const formattedDate = new Date(rawDate).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     });
 
-    return <div style={{fontSize: "9px"}} className=" text-gray-300">{formattedDate}</div>
+    return <div style={{fontSize: fontSize || "9px"}} className=" text-gray-300">{formattedDate}</div>
 }
  
 export const isToday = (value) => {

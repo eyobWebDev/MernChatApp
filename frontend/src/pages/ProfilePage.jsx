@@ -1,6 +1,8 @@
-import {User, Pen, Mail, Camera} from "lucide-react"
+import {User, Pen, Mail, Camera, SwitchCamera} from "lucide-react"
 import {useAuthStore } from "../states/useAuthStore.jsx"
 import {useState } from "react"
+import ProfileInfoHeader from "../components/ProfileInfoHeader.jsx"
+import { colors } from "../utils/colors.js"
 
 export default function Profile(){
     const {authUser, updateProfile } = useAuthStore()
@@ -22,56 +24,13 @@ export default function Profile(){
 
     }
     
-    return(
-        <div className="flex border-s mt-32 flex-col m-3 p-3 justify-center items-center">
-            <div className="relative flex justify-center items-center w-64 h-64 border-1 rounded-full">
-            <div className="absolute flex justify-center items-center w-64 h-64 overflow-hidden border-1 rounded-full">
-            
-            <img src={authUser.profilePic || selctedImage || "/react.svg"} className="object-cover absolute w-full h-full img" /> 
-            </div>
-            
-            <div className="absolute rounded right-5 bottom-5">
-                <input 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                id="fileInput"
-                onChange={handleImageChange}
-                />
-                <label htmlFor="fileInput">
-                <Camera className="rounded p-1 w-8 h-8 bg-gray-600 "/>
-                </label>
-            </div>   
-        
-            </div>
-            
-            <div className="p-1 m-1 text-gray-500 text-center">
-                <h2>Update your profile picture</h2>
-            </div>
-            
-            
-            <div className="w-4/5">
-            {/* Full name input area*/}
-        
-            <div className=" text-gray-300">Full name</div>
-            
-            <div className="text-gray-400 relative mb-4">
-            <User className="absolute z-10 left-3 top-2 w-5 h-5" />
-                <div className="text-gray-100 input input-bordered w-full pl-10">{authUser.fullName}</div>
-              </div>
-              
-            {/* Full name input area End*/}
-            
-            {/* Email input area*/}
-            <div className=" text-gray-300">Email</div>
-            
-            <div className="text-gray-400 relative mb-4">
-            <Mail className="absolute z-10 left-3 top-2 w-5 h-5" />
-                <div className="text-gray-100 input input-bordered w-full pl-10">{authUser.email}</div>
-              </div>
-              
-            {/* Email input area End*/}
-            </div>
+    return<>
+    <ProfileInfoHeader isProfilePage={true} />
+        <div className="h-1 bg-gray-600">
         </div>
-    )
+
+        <div className="flex mt-2">
+            <div className={`text-[${colors.primary}] font-bold`}>Groups</div>
+        </div>
+    </>
 }

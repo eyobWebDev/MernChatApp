@@ -1,4 +1,4 @@
-import {NavLink } from "react-router-dom"
+import {NavLink, useActionData, useLoaderData, useLocation, useNavigate, useNavigation, useParams, useSearchParams } from "react-router-dom"
 import {useChatStore } from "../states/useChatStore.jsx"
 import {useAuthStore } from "../states/useAuthStore.jsx"
 import defaultPicture from "../assets/Avatar.jpg"
@@ -15,11 +15,10 @@ export default function ShowUser({user}){
         setSelectedUser(user)
     }
 
-
     const color = ["yellow", "blue", "green", "red"]
     const randomColor = color[generateRandomNumber()]
     
-    return<div className="border-l flex m-3 p-3 items-center gap-3">
+    return<div className="border-b-2 border-gray-900 flex m-3 p-3 items-center gap-3">
     {/* display profile pic */}
     <div className={`relative w-10 h-10 flex justify-center items-center rounded-full`}>
     <div className={`relative w-10 overflow-hidden h-10 flex justify-center items-center rounded-full border`}>

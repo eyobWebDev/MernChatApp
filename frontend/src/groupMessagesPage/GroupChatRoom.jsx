@@ -10,6 +10,7 @@ import GroupMediaTab from "../groupChatComponents/GroupMediaTab";
 import { useState } from "react";
 import ShowMoreBox from "../groupChatComponents/ShowMoreBox";
 import { useAuthStore } from "../states/useAuthStore";
+import { colors } from "../utils/colors";
  
  export default function GroupChatRoom() {
     const {selectedGroup, getGroupMessages, getGroupMembers, groupMembers, subscribeToMessage, unsubscribeFromMessage} = useGroupChatStore()
@@ -41,30 +42,32 @@ import { useAuthStore } from "../states/useAuthStore";
     
 
     return <>
-        <div className="mb-1.5 border-l">
-            
-            <div className="flex justify-between" style={{alignItems: "center"}}> 
-
-            <div className="flex ml-3" style={{alignItems: "center"}}> 
-                <NavLink to="/groups">
-                    <ArrowLeftIcon />
-                </NavLink>
+        <div className="">
+                <div className="border-b-5 ml-3 border-gray-500">
+                    <div className="flex justify-between items-center"> 
+                            {/* show group profile*/}
+                            <div className="flex ml-3 items-center"> 
+                                <NavLink to="/groups">
+                                    <ArrowLeftIcon />
+                                </NavLink>
+                                
+                                <GroupTile group={selectedGroup} /> 
+                            </div>
                 
-                <GroupTile group={selectedGroup} /> 
-                </div>
-           
 
-                <div onClick={handleMoreTab}>
-                    <MoreVertical />
-                    <div className="absolute"> {showBox ? <ShowMoreBox /> : ""} </div>
-                </div>
+                        <div onClick={handleMoreTab}>
+                            <MoreVertical />
+                            <div className="absolute"> {showBox ? <ShowMoreBox /> : ""} </div>
+                        </div>
 
-             </div>
+                    </div>
+                    <ChatRoomTab />
+                </div>
+             
 
             <div>
-                <ChatRoomTab />
                 <Routes>
-                    <Route index element={<GroupMessageTab />}/>
+                    <Route path="messages" element={<GroupMessageTab />}/>
                     <Route path="members" element={<GroupMemberTab />}/>
                     <Route path="media" element={<GroupMediaTab />}/>
                 </Routes>

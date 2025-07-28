@@ -133,7 +133,12 @@ export const useGroupChatStore = create((set, get) => ({
         set({isSendingMessage: true})
         const {selectedGroup, groupMessages} = get()
         if (!selectedGroup) return
-    
+        //automatically add the data to the groupMessages list
+       /* set({groupMessages: [...get().groupMessages, {
+            senderId: useAuthStore.getState().authUser,
+            content: data.content,
+            createdAt: Date.now()
+        }]}) */
         try {
             const res = await Axios.post(`api/groups/message/sendMessage/${selectedGroup._id}`, data) 
             
@@ -150,9 +155,7 @@ export const useGroupChatStore = create((set, get) => ({
         const socket = useAuthStore.getState().socket
         socket.emit("join-group", selectedGroup._id)
         socket.on("new-group-message", newMessage => {
-            set((state) => ({
-                groupMessages: [...state.groupMessages, newMessage],
-            }));
+            set({groupMessages: [...get().groupMessages, newMessage]});
             console.log("newgroup message", newMessage);
         })
 

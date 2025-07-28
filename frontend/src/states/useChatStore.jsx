@@ -45,7 +45,7 @@ export const useChatStore = create((set, get) => ({
         const { selectedUser } = get()
         if(!selectedUser) return
         set({isSendingMessage: true})
-        set({messages: [...get().messages, data]})
+        set({messages: [...get().messages, {...data, createdAt: Date.now()}]})
         try{
             const res = await Axios.post(`api/messages/send/${get().selectedUser._id}`, data)
             
