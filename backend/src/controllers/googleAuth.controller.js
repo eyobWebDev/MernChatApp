@@ -31,7 +31,7 @@ export const googleAuth = async (req, res) => {
 
            res.redirect(`${BASE_API_URL}/api/auth/google/login/redirect`)
             console.log("user redirected.");
-           
+           return
             
         }
             console.log("couldn't find existing user");
@@ -55,6 +55,7 @@ export const googleAuth = async (req, res) => {
             console.log("generated token and saved user redirecting...");
             
             res.redirect(`${BASE_API_URL}/api/auth/google/login/redirect`)
+            return
         } else {
             res.status(400).json({message: "Invalid credentials."})
         }
@@ -84,7 +85,10 @@ const getGoogleUserData = async (code) => {
     console.log("access token got.");
     
     console.log("getting user info...");
-    const res = await axios.get(`${GOOGLE_USER_INFO_URL}?access_token=${access_token}`)
+    const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      }})
     console.log("info gotten.");
         
     return res.data
