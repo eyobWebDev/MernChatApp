@@ -27,8 +27,8 @@ export default function SettingsPageInfoHeader(){
     }
 
  return <>
-    <div className="relative p-3 pt-0 text-white">
-        <div className={`rounded-2xl bg-[${colors.background}]  p-2`}>
+    <div className="relative mt-1 p-3 pt-0 text-white">
+        <div className={`rounded-2xl bg-[${colors.background}] custom-bg-color p-2`}>
             {/* editing and controls */}
             <div className="flex justify-between">
                 <ArrowLeft className="cursor-pointer" onClick={() => navigate("/users")} size={30} />
@@ -40,7 +40,7 @@ export default function SettingsPageInfoHeader(){
             </div>
 
             {/* profile */}
-            <div className="mt-6 ms-1.5 flex gap-6 items-center">
+            <div className="mt-6 p-3 flex gap-6 items-center">
                 <div className=" relative w-15 h-15 rounded-full">
                     <img src={authUser.profilePic || defaultPicture} className="rounded-full absolute w-full h-full object-cover" />
                 </div>

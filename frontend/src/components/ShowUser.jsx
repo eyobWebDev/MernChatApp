@@ -13,6 +13,8 @@ export default function ShowUser({user}){
     
     const handleUserClick = () => {
         setSelectedUser(user)
+        console.log(authUser, user);
+        
     }
 
     const color = ["yellow", "blue", "green", "red"]
@@ -28,7 +30,7 @@ export default function ShowUser({user}){
     </div>
     
     <div onClick={handleUserClick} className="hover:text-blue-400">
-    <NavLink className="hover:text-blue-400 active:text-blue-400" to={`/message/${user._id}`} >
+    <NavLink className="hover:text-blue-400 active:text-blue-400" to={authUser._id == user._id ? `/profile` : `/message/${user._id}`} >
     <h6>{user.fullName}</h6>
     <p style={{fontSize: "13px"}} className="text-gray-500">{user.email}</p></NavLink></div>
     </div>

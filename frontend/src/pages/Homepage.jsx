@@ -25,13 +25,13 @@ export default function Homepage(){
     }, []);
     
     return(<>
-     
+        <NavBar />
         <Header />
         <Routes>
             <Route path="/users" element={<ChatUser />} />
             <Route path="/groups" element={<GroupChatList />} />
-            <Route path="/groups/create" element={<CreateGroup />} />
-            <Route path="/groups/:id/*" element={<GroupChatRoom />} />
+            <Route path="/group/create" element={<CreateGroup />} />
+            
         </Routes>
         </>
     )

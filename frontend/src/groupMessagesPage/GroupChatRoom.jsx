@@ -16,8 +16,6 @@ import { colors } from "../utils/colors";
     const {selectedGroup, getGroupMessages, getGroupMembers, groupMembers, subscribeToMessage, unsubscribeFromMessage} = useGroupChatStore()
     const {authUser, socket} = useAuthStore()
     const [showBox, setShowBox] = useState(false)
-    
- 
 
  useEffect(() => {
         getGroupMessages()
@@ -39,12 +37,11 @@ import { colors } from "../utils/colors";
     const handleMoreTab = () => {
         setShowBox(prevState => !prevState)
     }
-    
 
     return <>
         <div className="">
-                <div className="border-b-5 ml-3 border-gray-500">
-                    <div className="flex justify-between items-center"> 
+                <div className="border-b-5 ml-3 sticky border-gray-500">
+                    <div className="flex relative justify-between items-center"> 
                             {/* show group profile*/}
                             <div className="flex ml-3 items-center"> 
                                 <NavLink to="/groups">
@@ -56,8 +53,8 @@ import { colors } from "../utils/colors";
                 
 
                         <div onClick={handleMoreTab}>
-                            <MoreVertical />
-                            <div className="absolute"> {showBox ? <ShowMoreBox /> : ""} </div>
+                            <MoreVertical className="cursor-pointer" />
+                            <div className="absolute right-4 z-10"> {showBox ? <ShowMoreBox /> : ""} </div>
                         </div>
 
                     </div>

@@ -4,6 +4,7 @@ import {Axios } from "../utils/axios.js"
 import {useNavigate, Link } from "react-router-dom"
 import toast from "react-hot-toast"
 import {useAuthStore } from "../states/useAuthStore.jsx"
+import GoogleSignInLink from "../components/GoogleSignInLink.jsx"
 
 export default function Login(){
     const [email, setEmail] = useState("")
@@ -12,8 +13,8 @@ export default function Login(){
     const navigate = useNavigate()
     const {login, isLoggingIn } = useAuthStore()
     
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = () => {
+
         if(!password || !email) return toast.error("Inputs must be filled.")
         login({email, password})
     }
@@ -25,9 +26,11 @@ export default function Login(){
             </div>
             <h2 className=" mt-1 text-2xl text-center">Log in below</h2>
             <h6 className=" mt-1 text-gray-600 text-center">Log in to continue using the app</h6>
+
+            
             
             {/* Form below */}
-            <form onSubmit={handleSubmit}>
+            <form>
             <div className="form flex m-10 flex-col">
             
             {/* Email input area*/}
@@ -65,18 +68,25 @@ export default function Login(){
                 {showPassword? <Eye className=" z-10 left-3 top-2 w-5 h-5" />: <EyeOff className=" z-10 left-3 top-2 w-5 h-5" />}
                 </div>
               </div>
+              
             {/* Password input area End*/}
-            <button disabled={isLoggingIn} type="submit" className="btn w-full">
+
+            <button onClick={handleSubmit} disabled={isLoggingIn} type="submit" className="btn w-full">
             {isLoggingIn ? <Loader className="animate-spin text-blue-500 h-6 w-6" />: "Log In"}
             </button>
+
+            
             
             <div className="w-full text-gray-400 mt-4 text-center">
             Don't have an account Sign up <Link className="text-blue-600" to="/signup">Here</Link>
             </div>
             
             </div>
+
+            <h6 className="text-center m-2">Or</h6>
             </form>
             {/*form ends here */}
+            <GoogleSignInLink />
             
         </div>
     )

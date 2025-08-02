@@ -10,6 +10,7 @@ export const useChatStore = create((set, get) => ({
     isUserLoading: false,
     isMessagesLoading: false,
     isSendingMessage: false,
+    isEditingMessage: false,
     
     getUsers: async () =>{
         set({isUserLoading: true})
@@ -56,6 +57,19 @@ export const useChatStore = create((set, get) => ({
             set({isSendingMessage: false})
         }
     },
+    editMessage: async (data) => {
+        const {selectedUser} = get()
+        if (!selectedUser) return
+        set({isEditingMessage: true})
+        try {
+            const res = await Axios.post(`api/messages/edit/${get().selectedUser._id}`, data)
+        } catch (e) {
+            console.log("Error sending message", e)
+            toast.error(e.response.data.message)
+        } finally {
+            set({isEditingMessage: false})
+        }
+    },
     setSelectedUser: async (user) =>{
         set({selectedUser: user})
     },
@@ -65,6 +79,15 @@ export const useChatStore = create((set, get) => ({
         const socket = useAuthStore.getState().socket
         socket.on("newMessage", newMessage => {
             set({messages: [...get().messages, newMessage]})
+        })
+        socket.on("editMessage", newMessage => {
+            get().messages.map(msg => {
+                if(msg._id == newMessage._id){
+                    msg.text = newMessage.text
+                    msg.updatedAt = newMessage.updatedAt
+                    msg.edited = true
+                }
+            })
         })
     },
     unsubscribeFromMessage: async () => {

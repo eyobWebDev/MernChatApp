@@ -38,10 +38,11 @@ export const useGroupChatStore = create((set, get) => ({
     },
 
     //to join a group expects: {groupId} posts to api/groups/join
-    joinGroup: async (data) => {
+    joinGroup: async () => {
+        if(!selectedGroup) return
         set({joinGroupLoading: true})
         try {
-            const res = await Axios.post("api/groups/join", data)
+            const res = await Axios.post("api/groups/join", {groupId: selectedGroup._id})
             if(res.status == 200){
                 set({selectedGroup: res.data.group})
                 toast.success(res.data.message)

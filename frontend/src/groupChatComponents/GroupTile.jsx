@@ -21,12 +21,12 @@ export default function GroupTile({group}) {
         <div onClick={handleClick} className="cursor-pointer border-b-2 border-gray-900 p-3 flex m-2" style={{alignItems: "center"}}>
 
             <div style={{alignItems: "center"}} 
-            className={`mr-4 h-12 flex justify-center bg-[${colors.background}] w-12 rounded-full text-center`}>
+            className={`mr-4 h-12 flex justify-center bg-[${colors.background}] custom-bg-color w-12 rounded-full text-center`}>
                 <h1>{first + second}</h1>
             </div>
 
             <div>
-                <div className={`cursor-pointer hover:text-[${colors.primary}] mb-1`}>
+                <div className={`cursor-pointer hover:text-[${colors.primary}] hover:custom-text-color mb-1`}>
                     <h3>{group.name}</h3>
                 </div>
                 <div>

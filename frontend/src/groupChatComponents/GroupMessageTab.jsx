@@ -26,7 +26,7 @@ export default function GroupMessageTab() {
     
 
     return<>
-    <div className="h-[60vh] overflow-scroll">
+    <div className="h-[80vh] p-1 sm:h-[70vh] overflow-scroll">
         {groupMessages.length > 0 ? 
         (groupMessages.map(message => {
                     return <MessageLayout message={message} />

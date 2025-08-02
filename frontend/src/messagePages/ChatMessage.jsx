@@ -36,7 +36,7 @@ export default function ChatMessage(){
     
     <div className="w-full">
         {/* showing messages */}
-        <div className="h-[60vh] overflow-scroll">
+        <div className="h-[80vh] overflow-scroll">
             <ShowMessage />
         </div>
         {/* showing message input */}

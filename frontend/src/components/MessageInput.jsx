@@ -44,7 +44,7 @@ export default function MessageInput(){
     <img src={image} className="absolute object-cover w-full h-full" />
     <span onClick={handleCancelButton} className="absolute p-1 right-0.5 top-0.5 rounded-full bg-neutral-950 text-white"><X /></span>
     </div>}
-    <div className="flex p-3 mb-1 border-b items-center gap-2">
+    <div className="flex items-center gap-2">
     <label htmlFor="image-input">
     <Image size={32} />
     <input 

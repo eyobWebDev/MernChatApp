@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar.jsx"
 import {Loader } from "lucide-react"
 import ChatMessage from './messagePages/ChatMessage.jsx'
 import GroupChatRoom from './groupMessagesPage/GroupChatRoom.jsx'
+import "./App.css"
 
 
 
@@ -37,11 +38,12 @@ function App() {
   
     return (
         <>
-        <NavBar />
-        <div className='md:m-52 md:mt-0 md:mb-0'>
+        
+        <div className='md:m-50 md:mt-0 md:mb-0'>
         <Routes>
             <Route path="/*" element={authUser ? <Homepage /> : <Navigate to="/login" />}/>
             <Route path="/message/:id" element={authUser ? <ChatMessage /> : <Navigate to="/login" />} />
+            <Route path="/groups/:id/*" element={authUser ? <GroupChatRoom /> : <Navigate to="/login" />} />
             <Route path="/signup" element={!authUser?<Signup />: <Navigate to="/"/>}/>
             <Route path="/login" element={!authUser? <Login /> : <Navigate to="/" />}/>
             <Route path="/profile" element={authUser? <Profile /> : <Navigate to="/login" />}/>

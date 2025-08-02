@@ -30,7 +30,7 @@ export default function ProfilePageInfoHeader() {
     return <>
     <div className={`relative p-3  rounded-2xl`}>
         <div className="flex justify-between">
-                <ArrowLeft className="cursor-pointer" onClick={() => navigate('/users')} size={30} />
+                <ArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} size={30} />
                 <div className="flex gap-6">
                     <Edit2 />
                     <MoreVertical />
@@ -44,7 +44,7 @@ export default function ProfilePageInfoHeader() {
             <img src={authUser.profilePic || selctedImage || defaultImage} className="object-cover rounded-full absolute w-full h-full" /> 
             </div>
             
-            <div className={`absolute rounded-full right-5 bottom-5 bg-[${colors.background}]`}>
+            <div className={`absolute rounded-full right-5 bottom-5 bg-[${colors.background}] custom-bg-color`}>
                 <input 
                 type="file" 
                 accept="image/*" 

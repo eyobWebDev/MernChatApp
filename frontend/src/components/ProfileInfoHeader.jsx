@@ -32,7 +32,7 @@ export default function ProfileInfoHeader({isProfilePage}){
 
             {/* info */}
             <div className="p-2 flex flex-col gap-5">
-                <h6 className={`text-[${colors.primary}] font-bold`}>info</h6>
+                <h6 className={`text-[${colors.primary}] custom-text-color font-bold`}>info</h6>
 
                 <div className="cursor-pointer">
                     <h4>{authUser.fullName}</h4>

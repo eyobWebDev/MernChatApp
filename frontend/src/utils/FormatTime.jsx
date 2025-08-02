@@ -26,4 +26,9 @@ export const isToday = (value) => {
         const today = new Date();
         const result = rawDate.toDateString() === today.toDateString()
         return result
-    }
+}
+
+export const colors = {
+    primary: "#018abe",
+    background: "#023859"
+}

@@ -30,7 +30,7 @@ export default function Profile(){
         </div>
 
         <div className="flex mt-2">
-            <div className={`text-[${colors.primary}] font-bold`}>Groups</div>
+            <div className={`text-[${colors.primary}] custom-text-color font-bold`}>Groups</div>
         </div>
     </>
 }
