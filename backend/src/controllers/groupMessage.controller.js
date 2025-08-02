@@ -66,7 +66,7 @@ export const editGroupMessage = async (req, res) => {
     }
 }
 
-//deleet group message
+//delete group message
 export const deleteGroupMessage = (req, res) => {
 
 }

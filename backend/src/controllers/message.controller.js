@@ -63,3 +63,30 @@ export const sendMessage = async (req, res) =>{
         res.status(500).json({message: "Internal server error"})
     }
 }
+export const editMessage = async (req, res) => {
+  const {text} = req.body
+  const {id: messageId} = req.params
+
+  try {
+    const message = Message.findById({_id: messageId})
+    const senderId = req.user._id
+    const userCanEdit = message.senderId.toString()== senderId.toString()
+    if (userCanEdit) {
+        const newMessage = await Message.findByIdAndUpdate({_id: messageId}, {text}, {new: true})
+        res.status(200).json(newMessage)
+
+        //implement realtime feature
+        const recieverSocketId = getSocketId(message.recieverId)
+        if(recieverSocketId){
+            io.to(recieverSocketId).emit("editMessage", newMessage)
+        }
+    } else {
+        console.log("unauthorized user's action.")
+        res.status(403).json({message: "cannot edit message that is not yours."})
+    }
+    
+  } catch (e) {
+    console.log("Error in editing a message", e.message)
+    res.status(500).json({message: "Internal server error"})
+  }
+}
