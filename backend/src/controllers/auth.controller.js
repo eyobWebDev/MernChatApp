@@ -83,7 +83,7 @@ export const logout = (req, res) => {
     }
 }
 
-export const updateProfile = async (req, res) => {
+export const updateProfilePic = async (req, res) => {
     try {
         const { profilePic } = req.body
        const userId = req.user._id
@@ -101,4 +101,32 @@ export const updateProfile = async (req, res) => {
         console.log("Error in Upload profile controller", e)
         res.status(500).json({message: "Internal server error."})
     }
+}
+
+export const updateProfile = async (req, res) => {
+    try {
+        const data = req.body
+        const userId = req.user._id
+        const newUser = await User.findByIdAndUpdate(userId, data, {new: true})
+        res.status(200).json(newUser)
+    } catch (e) {
+        console.log("Error in update profile controller", e)
+        res.status(500).json({message: "Internal server error."})
+    }
+}
+
+export const searchUser = async (req, res) => {
+    const {q} = req.query
+    if(!q) return res.json({})
+    
+    const regex = new RegExp(q, "i")
+
+    const users = await User.find({
+        $or:[
+            {fullName: regex},
+            {email: regex}
+        ]
+    }).limit(20).select("fullName email profilePic");
+
+    res.json(users)
 }

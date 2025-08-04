@@ -1,3 +1,4 @@
+import { io } from "../lib/socket.js"
 import GroupChat from "../models/groupChat.model.js"
 
 //to create a group in the GroupChat models
@@ -53,7 +54,7 @@ export const joinGroup = async (req, res) => {
                 runValidators: true
             }
         ).populate("members", "fullName email profilePic").populate("admin", "fullName email profilePic")
-
+        io.to(updatedGroup._id.toString()).emit("become-member", req.user)
         res.status(200).json({group: updatedGroup, message: "Succesfully joined the group."})
     } catch (e) {
         console.log("Errror in joinGroup controller.", e.message)
@@ -79,6 +80,8 @@ export const leaveGroup = async (req, res) => {
                 {new: true}
             ).populate("members", "fullName email profilePic").populate("admin", "fullName email profilePic")
             res.status(200).json({group: updatedGroup, message: "Succesfully left the group."})
+           io.to(updatedGroup._id.toString()).emit("leave-membership", req.user)
+            
         } else {
             res.status(404).json({message: "Group not found."})
         }

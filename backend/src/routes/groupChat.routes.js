@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post("/create",protectedRoute, createGroup)
 router.post("/join", protectedRoute, joinGroup)
-router.post("/leave/:id",protectedRoute, leaveGroup)
+router.post("/leave",protectedRoute, leaveGroup)
 router.post("/delete/:id",protectedRoute, deleteGroup)
 router.post("/update/:id",protectedRoute, updateGroupProfile)
 router.get("/getAllMembers/:id",protectedRoute, getAllMembers)
