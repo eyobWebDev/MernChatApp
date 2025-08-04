@@ -13,6 +13,11 @@ import {Loader } from "lucide-react"
 import ChatMessage from './messagePages/ChatMessage.jsx'
 import GroupChatRoom from './groupMessagesPage/GroupChatRoom.jsx'
 import "./App.css"
+import EditProfilePage from './pages/EditProfilePage.jsx'
+import GroupMediaTab from './groupChatComponents/GroupMediaTab.jsx'
+import GroupMemberTab from './groupChatComponents/GroupMemberTab.jsx'
+import GroupMessageTab from './groupChatComponents/GroupMessageTab.jsx'
+import SearchUserPage from './pages/SearchUserPage.jsx'
 
 
 
@@ -43,10 +48,12 @@ function App() {
         <Routes>
             <Route path="/*" element={authUser ? <Homepage /> : <Navigate to="/login" />}/>
             <Route path="/message/:id" element={authUser ? <ChatMessage /> : <Navigate to="/login" />} />
-            <Route path="/groups/:id/*" element={authUser ? <GroupChatRoom /> : <Navigate to="/login" />} />
+            <Route path='/users/search' element={authUser ? <SearchUserPage /> : <Navigate to="/login" />} />
+            <Route path="/groups/:id" element={authUser ? <GroupChatRoom /> : <Navigate to="/login" />}/>
             <Route path="/signup" element={!authUser?<Signup />: <Navigate to="/"/>}/>
             <Route path="/login" element={!authUser? <Login /> : <Navigate to="/" />}/>
             <Route path="/profile" element={authUser? <Profile /> : <Navigate to="/login" />}/>
+            <Route path="/profile/edit" element={authUser? <EditProfilePage /> : <Navigate to="/login" />}/>
             <Route path="/settings" element={<Settings />}/>
             <Route path="/logout" element={authUser ? <Logout /> : <Navigate to="/login" />}/>
         </Routes>

@@ -19,7 +19,7 @@ export default function GroupChatList(){
             return <UserLoadingSkeleton />
         }))
     }
-    console.log(allGroups);
+
     
 
     return<>

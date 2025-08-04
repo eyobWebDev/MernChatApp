@@ -8,7 +8,7 @@ import {colors}  from "../utils/colors.js"
 export default function Header(){
     const {selectedUser} = useChatStore()
     
-    return <div className="not-sm:text-[15px] border-gray-600 flex gap-4 mt-3 border-b-4">
+    return <div className="not-sm:text-[15px] border-gray-600 flex gap-4 border-b-4">
     <div className="ml-2 not-sm:text-[15px] p-1"><NavLink to={`/`} className={
         ({isActive}) => isActive ? `text-[${colors.primary}] custom-text-color`: ""}> All</NavLink></div>
 

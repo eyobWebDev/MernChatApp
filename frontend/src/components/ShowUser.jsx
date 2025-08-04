@@ -20,7 +20,7 @@ export default function ShowUser({user}){
     const color = ["yellow", "blue", "green", "red"]
     const randomColor = color[generateRandomNumber()]
     
-    return<div className="border-b-2 border-gray-900 flex m-3 p-3 items-center gap-3">
+    return<div className="border-b-2 border-gray-900 flex p-3 items-center gap-3">
     {/* display profile pic */}
     <div className={`relative w-10 h-10 flex justify-center items-center rounded-full`}>
     <div className={`relative w-10 overflow-hidden h-10 flex justify-center items-center rounded-full border`}>

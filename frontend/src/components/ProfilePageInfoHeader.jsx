@@ -4,11 +4,12 @@ import { colors } from "../utils/colors";
 import { useState } from "react";
 import defaultImage from "../assets/Avatar.jpg"
 import { useNavigate } from "react-router-dom";
+import ProfileDropDownMenu from "./ProfileDropDownMenu";
 
 export default function ProfilePageInfoHeader() {
     const {authUser, onlineUsers} = useAuthStore()
     const [selctedImage, setSelctedImage] = useState()
-    const {updateProfile} = useAuthStore()
+    const {updateProfilePic} = useAuthStore()
     const navigate = useNavigate()
 
           
@@ -22,18 +23,18 @@ export default function ProfilePageInfoHeader() {
         reader.onload = async () => {
             const base64Image = reader.result
             setSelctedImage(base64Image)
-            await updateProfile({profilePic: base64Image})
+            await updateProfilePic({profilePic: base64Image})
         }
 
     }
 
     return <>
     <div className={`relative p-3  rounded-2xl`}>
-        <div className="flex justify-between">
-                <ArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} size={30} />
-                <div className="flex gap-6">
-                    <Edit2 />
-                    <MoreVertical />
+        <div className="flex mt-2 items-center justify-between">
+                <ArrowLeft className="cursor-pointer" onClick={() => navigate('/users')} size={25} />
+                <div className="flex items-center gap-6">
+                    <Edit2 size={25}  className="cursor-pointer" onClick={() => navigate('/profile/edit')} />
+                    <ProfileDropDownMenu />
                 </div>
         </div>
 

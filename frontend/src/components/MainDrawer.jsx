@@ -28,7 +28,7 @@ export default function MainDrawer() {
 
     return <Drawer direction="left">
         <DrawerTrigger asChild>
-            <Menu size={20} />
+            <Menu className="cursor-pointer" size={20} />
         </DrawerTrigger>
 
         <DrawerContent  className="bg-base-200 p-0 text-base-content">
@@ -37,7 +37,7 @@ export default function MainDrawer() {
                         <div className="h-15 relative w-15 rounded-full">
                             <img className="absolute w-full h-full rounded-full object-cover" src={authUser.profilePic || defaultPicture} />
                         </div>
-                        <div onClick={toggleDarkMode}>
+                        <div className="cursor-pointer" onClick={toggleDarkMode}>
                             {isDarkMode ? <SunIcon /> : <MoonIcon />}
                         </div>
 

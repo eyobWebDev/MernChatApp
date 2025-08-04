@@ -13,6 +13,8 @@ export const useAuthStore = create((set, get) => ({
     isCheckingAuth: true,
     onlineUsers: [],
     socket: null,
+    searchedUser: [],
+    isSearchingUser: false,
     
     checkAuth: async () => {
         try {
@@ -64,9 +66,9 @@ export const useAuthStore = create((set, get) => ({
             set({isLoggingOut: false})
         }
     },
-    updateProfile: async (data) => {
+    updateProfilePic: async (data) => {
         try{
-            const res = await Axios.post("api/auth/update-profile", data)
+            const res = await Axios.post("api/auth/update-profile-pic", data)
         
             if (res.status != 200){
                 toast.error("Invalid data.")
@@ -76,6 +78,32 @@ export const useAuthStore = create((set, get) => ({
         }catch (e){
             console.log("Error updating profile picture.", e)
             toast.error(e.response ?.data.message || "something went wrong.")
+        }
+    },
+    updateProfile: async (data) => {
+        try{
+            const res = await Axios.post("api/auth/update-profile", data)
+        
+            if (res.status != 200){
+                toast.error("Invalid data.")
+            }
+            set({authUser: res.data})
+            toast.success("profile updated succesfully.")
+        }catch (e){
+            console.log("Error updating profile.", e)
+            toast.error(e.response?.data.message || "something went wrong.")
+        }
+    },
+    searchUser: async (query) => {
+       
+        set({isSearchingUser: true})
+        try{
+             const res = await Axios.get(`api/auth/search?q=${query}`)
+                set({searchedUser: res.data})
+        }catch (e){
+            toast.error(e.response.data.message)
+        } finally {
+            set({isSearchingUser: false})
         }
     },
     connectSocket: async () => {

@@ -11,6 +11,7 @@ import GroupChatList from "../groupMessagesPage/GroupChatList.jsx"
 import CreateGroup from "../groupMessagesPage/CreateGroup.jsx"
 import { useGroupChatStore } from "../states/useGroupChatStore.jsx"
 import { useChatStore } from "../states/useChatStore.jsx"
+import DisplayAll from "../components/DisplayAll.jsx"
 
 export default function Homepage(){
     const {checkAuth} = useAuthStore()
@@ -19,15 +20,13 @@ export default function Homepage(){
 
     useEffect(() => {
         checkAuth()
-        
-      getUsers()
-    
+        getUsers()
     }, []);
     
     return(<>
         <NavBar />
-        <Header />
         <Routes>
+            <Route index element={<DisplayAll />} />
             <Route path="/users" element={<ChatUser />} />
             <Route path="/groups" element={<GroupChatList />} />
             <Route path="/group/create" element={<CreateGroup />} />

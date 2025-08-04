@@ -39,19 +39,22 @@ export const useGroupChatStore = create((set, get) => ({
 
     //to join a group expects: {groupId} posts to api/groups/join
     joinGroup: async () => {
+        const {selectedGroup} = get()
         if(!selectedGroup) return
         set({joinGroupLoading: true})
         try {
             const res = await Axios.post("api/groups/join", {groupId: selectedGroup._id})
-            if(res.status == 200){
-                set({selectedGroup: res.data.group})
-                toast.success(res.data.message)
-            } else {
-                toast.error("Cannot join group.")
-            } 
-            
+
+            set({selectedGroup: res.data.group})
+            const socket = useAuthStore.getState().socket
+            socket.on("become-member", member => {
+                set({groupMembers: [...get().groupMembers, member]})
+                console.log("become member real time");
+                
+            })
+            toast.success(res.data.message)
         } catch (e) {
-            console.log("Error in creating group", e)
+            console.log("Error in join group", e)
             toast.error(e.response.data.message)
         } finally {
             set({joinGroupLoading: false})
@@ -65,7 +68,23 @@ export const useGroupChatStore = create((set, get) => ({
 
     //to leave a group expects: {groupId} posts to api/groups/leave/id
     leaveGroup: async () => {
-        
+       const {selectedGroup} = get()
+        if(!selectedGroup) return
+        try {
+            const res = await Axios.post("api/groups/leave", {groupId: selectedGroup._id})
+
+            set({selectedGroup: res.data.group})
+            const socket = useAuthStore.getState().socket
+            socket.on("leave-membership", member => {
+                set({groupMembers: [...get().groupMembers.find(mem => mem._id != member._id)]})
+                console.log("left membership real time");
+                
+            })
+            toast.success(res.data.message)
+        } catch (e) {
+            console.log("Error in join group", e)
+            toast.error(e.response.data.message)
+        } 
 
     },
 

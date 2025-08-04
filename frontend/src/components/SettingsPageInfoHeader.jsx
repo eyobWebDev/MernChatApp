@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function SettingsPageInfoHeader(){
     const {authUser, onlineUsers} = useAuthStore()
     const [selctedImage, setSelctedImage] = useState()
-    const {updateProfile} = useAuthStore()
+    const {updateProfilePic} = useAuthStore()
     const navigate = useNavigate()
          
     const handleImageChange = async (e) => {
@@ -21,7 +21,7 @@ export default function SettingsPageInfoHeader(){
         reader.onload = async () => {
             const base64Image = reader.result
             setSelctedImage(base64Image)
-            await updateProfile({profilePic: base64Image})
+            await updateProfilePic({profilePic: base64Image})
         }
 
     }

@@ -20,7 +20,7 @@ export default function ProfileInfoHeader({isProfilePage}){
             reader.onload = async () => {
                 const base64Image = reader.result
                 setSelctedImage(base64Image)
-                await updateProfile({profilePic: base64Image})
+                await updateProfilePic({profilePic: base64Image})
             }
     
         }

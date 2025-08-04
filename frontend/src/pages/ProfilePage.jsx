@@ -5,7 +5,7 @@ import ProfileInfoHeader from "../components/ProfileInfoHeader.jsx"
 import { colors } from "../utils/colors.js"
 
 export default function Profile(){
-    const {authUser, updateProfile } = useAuthStore()
+    const {authUser, updateProfilePic } = useAuthStore()
     const [selctedImage, setSelctedImage] = useState()
     
     
@@ -19,7 +19,7 @@ export default function Profile(){
         reader.onload = async () => {
             const base64Image = reader.result
             setSelctedImage(base64Image)
-            await updateProfile({profilePic: base64Image})
+            await updateProfilePic({profilePic: base64Image})
         }
 
     }
