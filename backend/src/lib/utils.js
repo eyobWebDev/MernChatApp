@@ -11,7 +11,7 @@ export const generateToken = (userId, res) => {
         maxAge: 7 * 24 * 3600 * 1000,
         httpOnly: true,
         sameSite: "strict",
-        secure: process.env.NODE_END != "development"
+        secure: process.env.NODE_END == "production"
     })
     
     return token
