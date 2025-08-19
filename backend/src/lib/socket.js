@@ -20,7 +20,7 @@ export function getSocketId(userId) {
 
 io.on("connection", socket => {
     console.log("User connected ", socket.id)
-    const userId = socket.handshake.query.userId
+    const userId = socket.handshake.auth.userId
     if(userId) userSocketMap[userId] = socket.id
     io.emit("getOnlineUsers", Object.keys(userSocketMap))
 
