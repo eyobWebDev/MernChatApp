@@ -107,8 +107,9 @@ export const useAuthStore = create((set, get) => ({
         }
     },
     connectSocket: async () => {
-        const socket = io(BASEURL, {
-            query: {
+        const socket = io("https://mernchatapp-qlo9.onrender.com", 
+            {
+            auth: {
                 userId: get().authUser._id,
             }
         })
