@@ -18,6 +18,7 @@ import GroupMediaTab from './groupChatComponents/GroupMediaTab.jsx'
 import GroupMemberTab from './groupChatComponents/GroupMemberTab.jsx'
 import GroupMessageTab from './groupChatComponents/GroupMessageTab.jsx'
 import SearchUserPage from './pages/SearchUserPage.jsx'
+import { Toaster as Ts } from './components/ui/sonner.jsx'
 
 
 
@@ -59,6 +60,7 @@ function App() {
         </Routes>
         </div>
         <Toaster />
+        <Ts />
     </>
     )
 }

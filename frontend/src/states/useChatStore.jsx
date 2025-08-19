@@ -2,6 +2,8 @@ import {create } from "zustand"
 import toast from "react-hot-toast"
 import {Axios} from "../utils/axios.js"
 import {useAuthStore} from "./useAuthStore.jsx"
+import { infoToaster } from "../components/toaster.jsx"
+import { X } from "lucide-react"
 
 export const useChatStore = create((set, get) => ({
     messages: [],
@@ -78,7 +80,12 @@ export const useChatStore = create((set, get) => ({
         if(!selectedUser) return
         const socket = useAuthStore.getState().socket
         socket.on("newMessage", newMessage => {
-            set({messages: [...get().messages, newMessage]})
+            if(newMessage.recieverId == selectedUser._id){
+                set({messages: [...get().messages, newMessage]})
+            } else {
+                infoToaster("New Message", newMessage.text, <X />)
+            }
+            
         })
         socket.on("editMessage", newMessage => {
             get().messages.map(msg => {
