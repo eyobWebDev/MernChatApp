@@ -81,6 +81,9 @@ export const useChatStore = create((set, get) => ({
         const socket = useAuthStore.getState().socket
         socket.on("newMessage", newMessage => {
             if(newMessage.recieverId == selectedUser._id){
+                console.log("reciever id", newMessage.recieverId);
+                console.log("selected user id", selectedUser._id);
+                
                 set({messages: [...get().messages, newMessage]})
             } else {
                 infoToaster("New Message", newMessage.text, <X />)
